@@ -2,21 +2,14 @@ import { push } from 'connected-react-router';
 import {
   AUTH_REQUEST_IN_PROGRESS_START,
   AUTH_LOGGED_IN,
-  AUTH_ERR_LOG_IN,
   AUTH_LOGOUT, AUTH_REQUEST_IN_PROGRESS_END, RESET_SIGN_IN,
 } from '../constants/auth';
 import { userService } from '../services/userService';
-import { errorParser } from '../services/apiErrorParser';
-import { handleError } from './errors';
+import { handleErrors } from './errors';
 
 export const loggedIn = data => ({
   type: AUTH_LOGGED_IN,
   payload: data,
-});
-
-export const errorLogIn = errorMessage => ({
-  type: AUTH_ERR_LOG_IN,
-  payload: errorMessage,
 });
 
 export const requestInProgress = (isRequestInProgress = true) => {
@@ -41,7 +34,7 @@ export const resetState = () => ({
 export const logout = () => (dispatch, getState) => userService.logout(getState).then((res) => {
   dispatch(loggedOut());
 }).catch((err) => {
-  dispatch(handleError(err));
+  dispatch(handleErrors('sign-in', 'Error logging out.', err));
 });
 
 export const login = (username, password) => (dispatch) => {
@@ -50,8 +43,7 @@ export const login = (username, password) => (dispatch) => {
     await dispatch(loggedIn(res.data));
     await dispatch(push('/'));
   }).catch(async (err) => {
-    await dispatch(errorLogIn(errorParser.parseLoginError(err).message));
-    await dispatch(push('/'));
+    dispatch(handleErrors('sign-in', 'Error logging in.', err));
   }).finally(() => {
     dispatch(requestInProgress(false));
   });
@@ -63,7 +55,6 @@ export const socialiteLogin = (data, provider) => (dispatch) => {
     await dispatch(loggedIn(res.data));
     await dispatch(push('/'));
   }).catch(async (err) => {
-    await dispatch(errorLogIn('Authentication failed.'));
-    await dispatch(push('/'));
+    dispatch(handleErrors('sign-in', 'Error logging in.', err));
   }).finally(() => dispatch(requestInProgress(false)));
 };

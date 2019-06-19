@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { withRouter } from 'react-router-dom';
 import { validateEmail } from '../../services/utils';
-import { resetState, signUp } from '../../actions/sign-up';
+import { signUp } from '../../actions/sign-up';
 import UnauthContainer from '../../components/UnauthContainer';
 import useStyles from '../../styles/unauthStyles';
 import FormLink from '../../components/FormLink';
@@ -17,7 +17,6 @@ const SignUp = ({
   registrationError,
   signUp,
   history,
-  resetState,
 }) => {
   const classes = useStyles();
 
@@ -45,10 +44,6 @@ const SignUp = ({
       setValid(false);
     }
   }, [firstName, lastName, email, password, passwordConfirmation]);
-
-  useEffect(() => () => {
-    resetState();
-  }, []);
 
   return (
     <UnauthContainer classes={classes} title="Sign Up" errorMessage={registrationError}>
@@ -174,7 +169,7 @@ SignUp.propTypes = {
   registrationError: PropTypes.string,
   requestInProgress: PropTypes.bool.isRequired,
   signUp: PropTypes.func.isRequired,
-  resetState: PropTypes.func.isRequired,
+  resetErrorsExcept: PropTypes.func.isRequired,
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
 };
 
@@ -182,13 +177,12 @@ function mapStateToProps(state) {
   return {
     requestInProgress: state.signUp.requestInProgress,
     registrationError: state.signUp.registrationError,
-    errors: state.signUp.errors,
+    errors: state.errors.errors['sign-up'] ? state.errors.errors['sign-up'] : {},
   };
 }
 
 export default connect(
   mapStateToProps, {
     signUp,
-    resetState,
   },
 )(withRouter(SignUp));

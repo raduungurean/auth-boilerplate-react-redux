@@ -11,7 +11,7 @@ import { confirmSignUp } from '../../actions/confirm-sign-up';
 import FormLink from '../../components/FormLink';
 
 const ConfirmSignUp = ({
-  errorMessage, requestInProgress, confirmSignUpNow, match, confirmed, history,
+  requestInProgress, confirmSignUpNow, match, confirmed, history
 }) => {
   const classes = useStyles();
   const { token } = match.params;
@@ -29,7 +29,7 @@ const ConfirmSignUp = ({
   }
 
   return (
-    <UnauthContainer showIcon={false} classes={classes} errorMessage={errorMessage}>
+    <UnauthContainer showIcon={false} classes={classes} errorMessage="">
       {confirmed && (
       <Typography component="h4">
         Successfully Confirmed. Click
@@ -51,7 +51,6 @@ const ConfirmSignUp = ({
 };
 
 ConfirmSignUp.propTypes = {
-  errorMessage: PropTypes.string.isRequired,
   requestInProgress: PropTypes.bool.isRequired,
   confirmed: PropTypes.bool.isRequired,
   match: PropTypes.shape({ params: PropTypes.shape({ token: PropTypes.string }) }).isRequired,
@@ -62,7 +61,6 @@ ConfirmSignUp.propTypes = {
 function mapStateToProps(state) {
   return {
     requestInProgress: state.confirmSignUp.requestInProgress,
-    errorMessage: state.confirmSignUp.errors.length > 0 ? state.confirmSignUp.errors[0] : '',
     confirmed: state.confirmSignUp.confirmed,
   };
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -17,10 +17,6 @@ const SignIn = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const classes = useStyles();
-
-  useEffect(() => () => {
-    props.resetState();
-  }, []);
 
   return (
     <UnauthContainer title="Sign In" classes={classes} errorMessage="">
@@ -133,7 +129,6 @@ const SignIn = (props) => {
 SignIn.propTypes = {
   requestInProgress: PropTypes.bool.isRequired,
   login: PropTypes.func.isRequired,
-  resetState: PropTypes.func.isRequired,
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
 };
 

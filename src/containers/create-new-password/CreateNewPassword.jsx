@@ -123,7 +123,7 @@ function mapStateToProps(state) {
   return {
     checkingTokenRequestInProgress: state.createNewPassword.checkingTokenRequestInProgress,
     valid: state.createNewPassword.valid,
-    errors: state.createNewPassword.errors,
+    errors: state.errors.errors['create-new-password'] ? state.errors.errors['create-new-password'] : {},
     creatingPasswordRequestInProgress: state.createNewPassword.creatingPasswordRequestInProgress,
     successfullyCreated: state.createNewPassword.successfullyCreated,
   };

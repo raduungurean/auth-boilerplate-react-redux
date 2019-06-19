@@ -1,16 +1,10 @@
-import { push } from 'connected-react-router';
 import { userService } from '../services/userService';
 import {
   REQUEST_IN_PROGRESS_FORGOT_PASSWORD,
   REQUEST_IN_PROGRESS_FORGOT_PASSWORD_DONE,
   SENT_RECOVER_PASSWORD_REQUEST,
-  SET_RECOVER_PASSWORD_ERRORS,
 } from '../constants/forgot-password';
-
-export const setErrors = errors => ({
-  type: SET_RECOVER_PASSWORD_ERRORS,
-  payload: errors,
-});
+import { handleErrors } from './errors';
 
 export const requestInProgress = (isRequestInProgress = true) => {
   if (isRequestInProgress) {
@@ -31,12 +25,7 @@ export const recoverPasswordRequest = email => (dispatch) => {
   dispatch(requestInProgress());
   return userService.sendPasswordRecover(email).then(async (res) => {
     await dispatch(sentRecoverRequest(res.data));
-    await dispatch(push('/'));
   }).catch(async (err) => {
-    if (err.response && err.response.data.errors) {
-      dispatch(setErrors(err.response.data.errors));
-    } else {
-      dispatch(setErrors(['error']));
-    }
+    dispatch(handleErrors('forgot-password', 'Error sending request.', err));
   }).finally(() => dispatch(requestInProgress(false)));
 };

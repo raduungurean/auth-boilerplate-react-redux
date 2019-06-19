@@ -1,8 +1,6 @@
 import {
   REGISTERED,
   REQUESTS_IN_PROGRESS_REGISTER,
-  REGISTRATION_ERROR,
-  SET_REGISTRATION_ERRORS,
   REQUESTS_IN_PROGRESS_REGISTERED,
   RESET_REGISTRATION,
 } from '../constants/sign-up';
@@ -10,8 +8,6 @@ import {
 const INITIAL_STATE = {
   requestInProgress: false,
   registered: false,
-  registrationError: undefined,
-  errors: [],
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -25,8 +21,6 @@ export default function (state = INITIAL_STATE, action) {
     case REQUESTS_IN_PROGRESS_REGISTER: {
       return {
         ...state,
-        errors: [],
-        registrationError: undefined,
         requestInProgress: true,
       };
     }
@@ -35,20 +29,6 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         requestInProgress: false,
-      };
-    }
-
-    case REGISTRATION_ERROR: {
-      return {
-        ...state,
-        registered: false,
-        registrationError: action.payload,
-      };
-    }
-    case SET_REGISTRATION_ERRORS: {
-      return {
-        ...state,
-        errors: action.payload,
       };
     }
 

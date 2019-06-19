@@ -13,6 +13,7 @@ import signUpReducer from './sign-up';
 import forgotPasswordReducer from './forgot-password';
 import createNewPasswordReducer from './create-new-password';
 import confirmSignUpReducer from './confirm-sign-up';
+import errorsReducer from './errors';
 
 const reducers = history => combineReducers({
   router: connectRouter(history),
@@ -22,6 +23,7 @@ const reducers = history => combineReducers({
   forgotPassword: forgotPasswordReducer,
   createNewPassword: createNewPasswordReducer,
   confirmSignUp: confirmSignUpReducer,
+  errors: errorsReducer,
 });
 
 export const history = createBrowserHistory();

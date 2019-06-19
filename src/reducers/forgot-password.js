@@ -2,12 +2,10 @@ import {
   REQUEST_IN_PROGRESS_FORGOT_PASSWORD,
   REQUEST_IN_PROGRESS_FORGOT_PASSWORD_DONE,
   SENT_RECOVER_PASSWORD_REQUEST,
-  SET_RECOVER_PASSWORD_ERRORS,
 } from '../constants/forgot-password';
 
 const INITIAL_STATE = {
   requestInProgress: false,
-  errors: [],
   success: false,
 };
 
@@ -23,7 +21,6 @@ export default function (state = INITIAL_STATE, action) {
     case REQUEST_IN_PROGRESS_FORGOT_PASSWORD: {
       return {
         ...state,
-        errors: [],
         requestInProgress: true,
       };
     }
@@ -32,13 +29,6 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         requestInProgress: false,
-      };
-    }
-
-    case SET_RECOVER_PASSWORD_ERRORS: {
-      return {
-        ...state,
-        errors: action.payload,
       };
     }
 

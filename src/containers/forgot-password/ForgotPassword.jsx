@@ -12,7 +12,7 @@ import { validateEmail } from '../../services/utils';
 import FormLink from '../../components/FormLink';
 
 const ForgotPassword = ({
-  errors, recoverPasswordRequestNow, history, requestInProgress
+  errors, recoverPasswordRequestNow, history, requestInProgress,
 }) => {
   const classes = useStyles();
   const [email, setEmail] = useState('');
@@ -81,7 +81,7 @@ ForgotPassword.propTypes = {
 function mapStateToProps(state) {
   return {
     requestInProgress: state.forgotPassword.requestInProgress,
-    errors: state.forgotPassword.errors,
+    errors: state.errors.errors['forgot-password'] ? state.errors.errors['forgot-password'] : {},
   };
 }
 
