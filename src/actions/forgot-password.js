@@ -35,6 +35,8 @@ export const recoverPasswordRequest = email => (dispatch) => {
   }).catch(async (err) => {
     if (err.response && err.response.data.errors) {
       dispatch(setErrors(err.response.data.errors));
+    } else {
+      dispatch(setErrors(['error']));
     }
   }).finally(() => dispatch(requestInProgress(false)));
 };

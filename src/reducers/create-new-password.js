@@ -48,6 +48,7 @@ export default function (state = INITIAL_STATE, action) {
     case REQUEST_IN_PROGRESS_CREATING_NEW_PASSWORD:
       return {
         ...state,
+        errors: [],
         creatingPasswordRequestInProgress: true,
       };
 

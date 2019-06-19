@@ -9,6 +9,7 @@ import store, { history } from './reducers';
 import { loggedIn } from './actions/auth';
 import config from './config';
 import './App.css';
+import Notifications from './containers/Notifications';
 
 const userData = localStorage.getItem('userData');
 const userToken = localStorage.getItem('userToken');
@@ -28,6 +29,7 @@ function App() {
           <CssBaseline />
           <ConnectedRouter history={history}>
             <Navbar />
+            <Notifications />
             <Routes />
           </ConnectedRouter>
         </div>

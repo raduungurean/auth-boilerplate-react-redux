@@ -5,7 +5,7 @@ import {
   REQUESTS_IN_PROGRESS_REGISTER,
   REGISTRATION_ERROR,
   SET_REGISTRATION_ERRORS,
-  REQUESTS_IN_PROGRESS_REGISTERED,
+  REQUESTS_IN_PROGRESS_REGISTERED, RESET_REGISTRATION,
 } from '../constants/sign-up';
 
 export const requestInProgress = (isRequestInProgress = true) => {
@@ -31,6 +31,10 @@ export const errorRegistering = errorMessage => ({
 export const setErrors = errors => ({
   type: SET_REGISTRATION_ERRORS,
   payload: errors,
+});
+
+export const resetState = () => ({
+  type: RESET_REGISTRATION,
 });
 
 export const signUp = user => (dispatch) => {

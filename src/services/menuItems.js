@@ -10,10 +10,6 @@ const menuItems = [
     size: 24,
     component: 'FaTshirt',
   }, {
-    title: 'Protected',
-    path: '/protected',
-    component: 'RemoveCircle',
-  }, {
     title: 'Groups',
     path: '/groups',
     component: 'Group',

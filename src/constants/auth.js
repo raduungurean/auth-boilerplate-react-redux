@@ -3,3 +3,4 @@ export const AUTH_REQUEST_IN_PROGRESS_END = '[AUTH] AUTH_REQUEST_IN_PROGRESS_END
 export const AUTH_LOGGED_IN = '[AUTH] LOGGED_IN';
 export const AUTH_ERR_LOG_IN = '[AUTH] ERR_LOG_IN';
 export const AUTH_LOGOUT = '[AUTH] LOGOUT';
+export const RESET_SIGN_IN = '[AUTH] RESET_SIGN_IN';

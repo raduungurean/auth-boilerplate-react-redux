@@ -4,6 +4,7 @@ import {
   REGISTRATION_ERROR,
   SET_REGISTRATION_ERRORS,
   REQUESTS_IN_PROGRESS_REGISTERED,
+  RESET_REGISTRATION,
 } from '../constants/sign-up';
 
 const INITIAL_STATE = {
@@ -24,6 +25,7 @@ export default function (state = INITIAL_STATE, action) {
     case REQUESTS_IN_PROGRESS_REGISTER: {
       return {
         ...state,
+        errors: [],
         registrationError: undefined,
         requestInProgress: true,
       };
@@ -49,6 +51,13 @@ export default function (state = INITIAL_STATE, action) {
         errors: action.payload,
       };
     }
+
+    case RESET_REGISTRATION: {
+      return {
+        ...INITIAL_STATE,
+      };
+    }
+
     default:
       return state;
   }

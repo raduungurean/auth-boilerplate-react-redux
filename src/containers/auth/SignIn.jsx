@@ -1,27 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import { FacebookLoginButton, GoogleLoginButton } from 'react-social-login-buttons';
-import Box from '@material-ui/core/Box';
 import { withRouter } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import { login } from '../../actions/auth';
+import { login, resetState } from '../../actions/auth';
 import config from '../../config';
 import UnauthContainer from '../../components/UnauthContainer';
 import useStyles from '../../styles/unauthStyles';
 import FormLink from '../../components/FormLink';
 
 const SignIn = (props) => {
-  const { requestInProgress, errorMessage } = props;
+  const { requestInProgress } = props;
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const classes = useStyles();
 
+  useEffect(() => () => {
+    props.resetState();
+  }, []);
+
   return (
-    <UnauthContainer title="Sign In" classes={classes} errorMessage={errorMessage}>
+    <UnauthContainer title="Sign In" classes={classes} errorMessage="">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -130,20 +132,20 @@ const SignIn = (props) => {
 
 SignIn.propTypes = {
   requestInProgress: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.string.isRequired,
   login: PropTypes.func.isRequired,
+  resetState: PropTypes.func.isRequired,
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     requestInProgress: state.auth.requestInProgress,
-    errorMessage: state.auth.errorMessage,
   };
 }
 
 export default withRouter(connect(
   mapStateToProps, {
     login,
+    resetState,
   },
 )(SignIn));

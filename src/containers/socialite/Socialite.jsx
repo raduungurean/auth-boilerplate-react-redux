@@ -9,7 +9,7 @@ const Socialite = ({
 }) => {
   useEffect(() => {
     if (!authUser && location.search) {
-      socialiteLogin(location.search, match.params.provider);
+      socialiteLoginDo(location.search, match.params.provider);
     }
   }, [authUser, location, socialiteLoginDo, match]);
 

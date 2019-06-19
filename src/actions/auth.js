@@ -3,7 +3,7 @@ import {
   AUTH_REQUEST_IN_PROGRESS_START,
   AUTH_LOGGED_IN,
   AUTH_ERR_LOG_IN,
-  AUTH_LOGOUT, AUTH_REQUEST_IN_PROGRESS_END,
+  AUTH_LOGOUT, AUTH_REQUEST_IN_PROGRESS_END, RESET_SIGN_IN,
 } from '../constants/auth';
 import { userService } from '../services/userService';
 import { errorParser } from '../services/apiErrorParser';
@@ -32,6 +32,10 @@ export const requestInProgress = (isRequestInProgress = true) => {
 
 export const loggedOut = () => ({
   type: AUTH_LOGOUT,
+});
+
+export const resetState = () => ({
+  type: RESET_SIGN_IN,
 });
 
 export const logout = () => (dispatch, getState) => userService.logout(getState).then((res) => {

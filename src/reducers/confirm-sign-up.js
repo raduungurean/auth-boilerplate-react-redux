@@ -23,6 +23,7 @@ export default function (state = INITIAL_STATE, action) {
     case REQUEST_IN_PROGRESS_CONFIRM_SIGN_UP: {
       return {
         ...state,
+        errors: [],
         requestInProgress: true,
       };
     }

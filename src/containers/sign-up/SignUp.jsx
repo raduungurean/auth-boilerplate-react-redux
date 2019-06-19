@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { withRouter } from 'react-router-dom';
 import { validateEmail } from '../../services/utils';
-import { signUp } from '../../actions/sign-up';
+import { resetState, signUp } from '../../actions/sign-up';
 import UnauthContainer from '../../components/UnauthContainer';
 import useStyles from '../../styles/unauthStyles';
 import FormLink from '../../components/FormLink';
@@ -15,8 +15,9 @@ const SignUp = ({
   errors,
   requestInProgress,
   registrationError,
-  signUpNow,
+  signUp,
   history,
+  resetState,
 }) => {
   const classes = useStyles();
 
@@ -44,6 +45,10 @@ const SignUp = ({
       setValid(false);
     }
   }, [firstName, lastName, email, password, passwordConfirmation]);
+
+  useEffect(() => () => {
+    resetState();
+  }, []);
 
   return (
     <UnauthContainer classes={classes} title="Sign Up" errorMessage={registrationError}>
@@ -134,7 +139,7 @@ const SignUp = ({
           variant="contained"
           color="primary"
           onClick={() => {
-            signUpNow({
+            signUp({
               first_name: firstName,
               last_name: lastName,
               email,
@@ -168,15 +173,14 @@ SignUp.defaultProps = {
 SignUp.propTypes = {
   registrationError: PropTypes.string,
   requestInProgress: PropTypes.bool.isRequired,
-  registered: PropTypes.bool.isRequired,
-  signUpNow: PropTypes.func.isRequired,
+  signUp: PropTypes.func.isRequired,
+  resetState: PropTypes.func.isRequired,
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     requestInProgress: state.signUp.requestInProgress,
-    registered: state.signUp.registered,
     registrationError: state.signUp.registrationError,
     errors: state.signUp.errors,
   };
@@ -184,6 +188,7 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps, {
-    signUpNow: signUp,
+    signUp,
+    resetState,
   },
 )(withRouter(SignUp));

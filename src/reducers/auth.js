@@ -2,7 +2,9 @@ import {
   AUTH_ERR_LOG_IN,
   AUTH_LOGGED_IN,
   AUTH_REQUEST_IN_PROGRESS_START,
-  AUTH_LOGOUT, AUTH_REQUEST_IN_PROGRESS_END,
+  AUTH_LOGOUT,
+  AUTH_REQUEST_IN_PROGRESS_END,
+  RESET_SIGN_IN,
 } from '../constants/auth';
 
 const INITIAL_STATE = {
@@ -22,6 +24,7 @@ export default function (state = INITIAL_STATE, action) {
     case AUTH_REQUEST_IN_PROGRESS_START:
       return {
         ...state,
+        errorMessage: '',
         requestInProgress: true,
       };
 
@@ -42,6 +45,13 @@ export default function (state = INITIAL_STATE, action) {
         ...state,
         errorMessage: action.payload,
       };
+
+    case RESET_SIGN_IN: {
+      return {
+        ...INITIAL_STATE,
+      };
+    }
+
     default:
       return state;
   }

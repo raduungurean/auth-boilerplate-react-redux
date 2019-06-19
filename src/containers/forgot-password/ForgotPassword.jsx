@@ -12,7 +12,7 @@ import { validateEmail } from '../../services/utils';
 import FormLink from '../../components/FormLink';
 
 const ForgotPassword = ({
-  errors, recoverPasswordRequestNow, history, requestInProgress,
+  errors, recoverPasswordRequestNow, history, requestInProgress
 }) => {
   const classes = useStyles();
   const [email, setEmail] = useState('');
