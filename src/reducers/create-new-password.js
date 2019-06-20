@@ -5,13 +5,14 @@ import {
   REQUEST_IN_PROGRESS_CREATING_NEW_PASSWORD,
   SUCCESSFULLY_CREATED_PASSWORD,
   VALID_PASSWORD_TOKEN,
+  RESET_CREATE_PASSWORD_STATE,
 } from '../constants/create-new-password';
 
 const INITIAL_STATE = {
   checkingTokenRequestInProgress: true,
   valid: false,
   creatingPasswordRequestInProgress: false,
-  successfullyCreated: false,
+  success: false,
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -31,13 +32,21 @@ export default function (state = INITIAL_STATE, action) {
     case SUCCESSFULLY_CREATED_PASSWORD:
       return {
         ...state,
-        successfullyCreated: true,
+        success: true,
       };
 
     case REQUEST_IN_PROGRESS_CREATING_NEW_PASSWORD:
       return {
         ...state,
         creatingPasswordRequestInProgress: true,
+      };
+
+    case RESET_CREATE_PASSWORD_STATE:
+
+      return {
+        ...INITIAL_STATE,
+        checkingTokenRequestInProgress: state.checkingTokenRequestInProgress,
+        valid: state.valid,
       };
 
     case VALID_PASSWORD_TOKEN: {

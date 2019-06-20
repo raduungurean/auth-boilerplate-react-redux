@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Snackbar from '@material-ui/core/Snackbar';
+import Button from '@material-ui/core/Button';
 import MySnackbarContentWrapper from './MySnackbarContentWrapper';
 
-const MySnackbar = ({ message, isOpen, variant }) => {
-  const [open, setOpen] = useState(isOpen);
-
-  function handleClose(event, reason) {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  }
+const MySnackbar = ({
+  messages, isOpen, variant, handleClose, messageAction, onAction,
+}) => {
+  const message = messages[Object.keys(messages)[0]] ? messages[Object.keys(messages)[0]] : '';
 
   return (
     <Snackbar
@@ -20,12 +15,17 @@ const MySnackbar = ({ message, isOpen, variant }) => {
         vertical: 'top',
         horizontal: 'center',
       }}
-      open={open}
+      open={isOpen}
       autoHideDuration={6000}
       onClose={handleClose}
     >
       <MySnackbarContentWrapper
         onClose={handleClose}
+        action={messageAction ? (
+          <Button color="inherit" size="small" onClick={onAction}>
+            {messageAction}
+          </Button>
+        ) : null}
         variant={variant}
         message={message}
       />
@@ -33,10 +33,18 @@ const MySnackbar = ({ message, isOpen, variant }) => {
   );
 };
 
+MySnackbar.defaultProps = {
+  messageAction: undefined,
+  onAction: undefined,
+};
+
 MySnackbar.propTypes = {
-  message: PropTypes.string.isRequired,
+  messageAction: PropTypes.string,
+  onAction: PropTypes.func,
+  messages: PropTypes.object.isRequired,
   isOpen: PropTypes.bool.isRequired,
   variant: PropTypes.string.isRequired,
+  handleClose: PropTypes.func.isRequired,
 };
 
 export default MySnackbar;

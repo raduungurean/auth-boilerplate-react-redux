@@ -1,7 +1,7 @@
 import { push } from 'connected-react-router';
 import { userService } from '../services/userService';
 import { AUTH_LOGOUT } from '../constants/auth';
-import { SET_ERRORS, RESET_ERRORS_EXCEPT } from '../constants/errors';
+import { SET_ERRORS, RESET_ERRORS_EXCEPT, RESET_ERRORS } from '../constants/errors';
 
 export const setErrors = (screen, errors) => ({
   type: SET_ERRORS,
@@ -14,6 +14,13 @@ export const setErrors = (screen, errors) => ({
 export const resetErrorsExcept = except => ({
   type: RESET_ERRORS_EXCEPT,
   payload: except,
+});
+
+export const resetErrorsForScreen = screen => ({
+  type: RESET_ERRORS,
+  payload: {
+    screen,
+  },
 });
 
 export const handleErrors = (screen, specificErrorMessage, err) => async (dispatch) => {

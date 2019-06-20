@@ -10,6 +10,8 @@ import { signUp } from '../../actions/sign-up';
 import UnauthContainer from '../../components/UnauthContainer';
 import useStyles from '../../styles/unauthStyles';
 import FormLink from '../../components/FormLink';
+import MySnackbar from '../../components/MySnackbar';
+import { resetErrorsForScreen } from '../../actions/errors';
 
 const SignUp = ({
   errors,
@@ -17,6 +19,7 @@ const SignUp = ({
   registrationError,
   signUp,
   history,
+  resetErrorsForScreen,
 }) => {
   const classes = useStyles();
 
@@ -26,6 +29,23 @@ const SignUp = ({
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [valid, setValid] = useState(false);
+
+  const [open, setSnackBarOpen] = useState(false);
+
+  function handleClose(event, reason) {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackBarOpen(false);
+  }
+
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      setSnackBarOpen(true);
+    }
+  }, [errors]);
+
+  useEffect(() => () => resetErrorsForScreen('sign-up'), [resetErrorsForScreen]);
 
   useEffect(() => {
     if (firstName
@@ -47,6 +67,12 @@ const SignUp = ({
 
   return (
     <UnauthContainer classes={classes} title="Sign Up" errorMessage={registrationError}>
+      <MySnackbar
+        isOpen={open}
+        messages={errors}
+        variant="error"
+        handleClose={handleClose}
+      />
       <form className={classes.form} noValidate>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6}>
@@ -169,7 +195,6 @@ SignUp.propTypes = {
   registrationError: PropTypes.string,
   requestInProgress: PropTypes.bool.isRequired,
   signUp: PropTypes.func.isRequired,
-  resetErrorsExcept: PropTypes.func.isRequired,
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
 };
 
@@ -184,5 +209,6 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps, {
     signUp,
+    resetErrorsForScreen,
   },
 )(withRouter(SignUp));

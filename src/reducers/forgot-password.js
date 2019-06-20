@@ -2,6 +2,7 @@ import {
   REQUEST_IN_PROGRESS_FORGOT_PASSWORD,
   REQUEST_IN_PROGRESS_FORGOT_PASSWORD_DONE,
   SENT_RECOVER_PASSWORD_REQUEST,
+  RESET_FORGOT_PASSWORD_STATE,
 } from '../constants/forgot-password';
 
 const INITIAL_STATE = {
@@ -29,6 +30,12 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         requestInProgress: false,
+      };
+    }
+
+    case RESET_FORGOT_PASSWORD_STATE: {
+      return {
+        ...INITIAL_STATE,
       };
     }
 

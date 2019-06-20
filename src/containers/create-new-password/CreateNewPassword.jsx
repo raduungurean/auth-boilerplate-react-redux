@@ -8,7 +8,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import UnauthContainer from '../../components/UnauthContainer';
 import useStyles from '../../styles/unauthStyles';
-import { checkCreateNewPasswordToken, createNewPassword } from '../../actions/create-new-password';
+import { checkCreateNewPasswordToken, createNewPassword, resetState } from '../../actions/create-new-password';
+import MySnackbar from '../../components/MySnackbar';
 
 const CreateNewPassword = ({
   match,
@@ -18,6 +19,9 @@ const CreateNewPassword = ({
   errors,
   createNewPasswordNow,
   creatingPasswordRequestInProgress,
+  success,
+  resetState,
+  history,
 }) => {
   const classes = useStyles();
 
@@ -25,6 +29,27 @@ const CreateNewPassword = ({
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [validForm, setValidForm] = useState(false);
   const { token } = match.params;
+
+  const [open, setSnackBarOpen] = useState(false);
+  const [messages, setMessages] = useState({});
+
+  function handleClose(event, reason) {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setMessages({});
+    setSnackBarOpen(false);
+  }
+
+  useEffect(() => {
+    if (success) {
+      setMessages({ success: 'Successfully changed.' });
+      setSnackBarOpen(true);
+      resetState();
+    }
+  }, [success, resetState]);
+
+  useEffect(() => () => resetState(), [resetState]);
 
   useEffect(() => {
     checkCreateNewPasswordTokenNow(token);
@@ -56,6 +81,14 @@ const CreateNewPassword = ({
 
   return (
     <UnauthContainer classes={classes} title="Set your new password" errorMessage={!valid ? 'Invalid token.' : ''}>
+      <MySnackbar
+        isOpen={open}
+        messages={messages}
+        messageAction="Sign in"
+        onAction={() => history.push('/login')}
+        variant="success"
+        handleClose={handleClose}
+      />
       {valid && (
       <form className={classes.form} noValidate>
         <Grid container spacing={1}>
@@ -125,7 +158,7 @@ function mapStateToProps(state) {
     valid: state.createNewPassword.valid,
     errors: state.errors.errors['create-new-password'] ? state.errors.errors['create-new-password'] : {},
     creatingPasswordRequestInProgress: state.createNewPassword.creatingPasswordRequestInProgress,
-    successfullyCreated: state.createNewPassword.successfullyCreated,
+    success: state.createNewPassword.success,
   };
 }
 
@@ -133,5 +166,6 @@ export default connect(
   mapStateToProps, {
     checkCreateNewPasswordTokenNow: checkCreateNewPasswordToken,
     createNewPasswordNow: createNewPassword,
+    resetState,
   },
 )(withRouter(CreateNewPassword));

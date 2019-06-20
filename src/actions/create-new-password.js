@@ -4,6 +4,7 @@ import {
   REQUEST_IN_PROGRESS_CHECKING_TOKEN,
   REQUEST_IN_PROGRESS_CREATED_NEW_PASSWORD,
   REQUEST_IN_PROGRESS_CREATING_NEW_PASSWORD,
+  RESET_CREATE_PASSWORD_STATE,
   SUCCESSFULLY_CREATED_PASSWORD,
   VALID_PASSWORD_TOKEN,
 } from '../constants/create-new-password';
@@ -42,6 +43,10 @@ export const requestInProgress = (type) => {
 
 export const successfullyCreated = () => ({
   type: SUCCESSFULLY_CREATED_PASSWORD,
+});
+
+export const resetState = () => ({
+  type: RESET_CREATE_PASSWORD_STATE,
 });
 
 export const checkCreateNewPasswordToken = token => (dispatch) => {

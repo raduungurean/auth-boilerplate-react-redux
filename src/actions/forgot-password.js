@@ -2,6 +2,7 @@ import { userService } from '../services/userService';
 import {
   REQUEST_IN_PROGRESS_FORGOT_PASSWORD,
   REQUEST_IN_PROGRESS_FORGOT_PASSWORD_DONE,
+  RESET_FORGOT_PASSWORD_STATE,
   SENT_RECOVER_PASSWORD_REQUEST,
 } from '../constants/forgot-password';
 import { handleErrors } from './errors';
@@ -19,6 +20,10 @@ export const requestInProgress = (isRequestInProgress = true) => {
 
 export const sentRecoverRequest = () => ({
   type: SENT_RECOVER_PASSWORD_REQUEST,
+});
+
+export const resetState = () => ({
+  type: RESET_FORGOT_PASSWORD_STATE,
 });
 
 export const recoverPasswordRequest = email => (dispatch) => {
