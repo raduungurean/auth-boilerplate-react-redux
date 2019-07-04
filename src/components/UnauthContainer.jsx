@@ -5,11 +5,11 @@ import { Soccer } from 'mdi-material-ui';
 import Typography from '@material-ui/core/Typography';
 
 const UnauthContainer = ({
-  title, classes, children, errorMessage, showIcon
+  title, classes, children, errorMessage, showIcon,
 }) => (
   <Container component="main" maxWidth="xs">
     <div className={classes.paper}>
-      {showIcon && <Soccer style={{ fontSize: 50 }} />}
+      {showIcon && <Soccer style={{ fontSize: 1 }} />}
       <Typography component="h1" variant="h5" style={{ padding: 10 }}>
         {title}
       </Typography>

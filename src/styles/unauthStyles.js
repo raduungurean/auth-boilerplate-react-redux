@@ -1,11 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white,
-    },
-  },
   paper: {
     marginTop: theme.spacing(14),
     display: 'flex',
