@@ -10,7 +10,7 @@ const UnauthContainer = ({
   <Container component="main" maxWidth="xs">
     <div className={classes.paper}>
       {showIcon && <Soccer style={{ fontSize: 1 }} />}
-      <Typography component="h1" variant="h5" style={{ padding: 10 }}>
+      <Typography component="h1" variant="h4" style={{ padding: 10 }}>
         {title}
       </Typography>
       {errorMessage && <Typography component="h5" style={{ color: 'rgba(203,28,24,0.82)' }}>{errorMessage}</Typography>}

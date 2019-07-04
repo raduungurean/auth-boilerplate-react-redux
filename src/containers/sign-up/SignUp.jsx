@@ -15,6 +15,7 @@ import { resetErrorsForScreen } from '../../actions/errors';
 
 const SignUp = ({
   errors,
+  registered,
   requestInProgress,
   registrationError,
   signUp,
@@ -29,8 +30,8 @@ const SignUp = ({
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [valid, setValid] = useState(false);
-
   const [open, setSnackBarOpen] = useState(false);
+  const [openSuccess, setSnackSuccessBarOpen] = useState(false);
 
   function handleClose(event, reason) {
     if (reason === 'clickaway') {
@@ -39,11 +40,31 @@ const SignUp = ({
     setSnackBarOpen(false);
   }
 
+  function handleCloseSuccess(event, reason) {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackSuccessBarOpen(false);
+  }
+
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
       setSnackBarOpen(true);
     }
   }, [errors]);
+
+  useEffect(() => {
+    if (registered) {
+      setSnackSuccessBarOpen(true);
+      resetErrorsForScreen('sign-up');
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPassword('');
+      setPasswordConfirmation('');
+      setValid(false);
+    }
+  }, [registered, resetErrorsForScreen]);
 
   useEffect(() => () => resetErrorsForScreen('sign-up'), [resetErrorsForScreen]);
 
@@ -73,7 +94,13 @@ const SignUp = ({
         variant="error"
         handleClose={handleClose}
       />
-      <form className={classes.form} noValidate>
+      <MySnackbar
+        isOpen={openSuccess}
+        messages={{ msg: 'Successfully Registered.' }}
+        variant="success"
+        handleClose={handleCloseSuccess}
+      />
+      <form className={classes.form} noValidate autoComplete="off">
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -123,6 +150,7 @@ const SignUp = ({
           </Grid>
           <Grid item xs={12}>
             <TextField
+              autoComplete="new-password"
               variant="outlined"
               required
               fullWidth
@@ -139,6 +167,7 @@ const SignUp = ({
           </Grid>
           <Grid item xs={12}>
             <TextField
+              autoComplete="off"
               variant="outlined"
               required
               fullWidth
@@ -203,6 +232,7 @@ function mapStateToProps(state) {
     requestInProgress: state.signUp.requestInProgress,
     registrationError: state.signUp.registrationError,
     errors: state.errors.errors['sign-up'] ? state.errors.errors['sign-up'] : {},
+    registered: state.signUp.registered,
   };
 }
 
