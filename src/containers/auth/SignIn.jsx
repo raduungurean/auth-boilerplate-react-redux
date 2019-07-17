@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -11,15 +11,36 @@ import config from '../../config';
 import UnauthContainer from '../../components/UnauthContainer';
 import useStyles from '../../styles/unauthStyles';
 import FormLink from '../../components/FormLink';
+import MySnackbar from '../../components/MySnackbar';
 
 const SignIn = (props) => {
-  const { requestInProgress } = props;
+  const { requestInProgress, errors } = props;
+  const [open, setSnackBarOpen] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const classes = useStyles();
 
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      setSnackBarOpen(true);
+    }
+  }, [errors]);
+
+  function handleClose(event, reason) {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackBarOpen(false);
+  }
+
   return (
-    <UnauthContainer  title="Sign In" classes={classes} errorMessage="">
+    <UnauthContainer title="Sign In" classes={classes} errorMessage="">
+      <MySnackbar
+        isOpen={open}
+        messages={errors}
+        variant="error"
+        handleClose={handleClose}
+      />
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -135,6 +156,7 @@ SignIn.propTypes = {
 function mapStateToProps(state) {
   return {
     requestInProgress: state.auth.requestInProgress,
+    errors: state.errors.errors['sign-in'] ? state.errors.errors['sign-in'] : {},
   };
 }
 
