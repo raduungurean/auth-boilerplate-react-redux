@@ -7,7 +7,12 @@ import IconButton from '@material-ui/core/IconButton';
 import MySnackbarContentWrapper from './MySnackbarContentWrapper';
 
 const MySnackbar = ({
-  messages, isOpen, variant, handleClose, messageAction, onAction,
+  messages,
+  isOpen,
+  variant,
+  handleClose,
+  messageAction,
+  onAction,
 }) => {
   const message = messages[Object.keys(messages)[0]] ? messages[Object.keys(messages)[0]] : '';
 
@@ -27,16 +32,13 @@ const MySnackbar = ({
     >
       <MySnackbarContentWrapper
         onClose={handleClose}
-        action={messageAction ? (
-          <Button color="inherit" size="small" onClick={onAction}>
-            {typeof messageAction === 'boolean' ? (
-              <IconButton key="close" aria-label="Close" color="inherit" onClick={handleClose}>
-                <CloseIcon style={{ fontSize: 20 }} />
-              </IconButton>
-            ) : messageAction}
-
-          </Button>
-        ) : null}
+        action={
+          typeof messageAction === 'boolean' ? (
+            <IconButton key="close" aria-label="Close" color="inherit" onClick={handleClose}>
+              <CloseIcon style={{ fontSize: 20 }} />
+            </IconButton>
+          ) : <Button color="inherit" size="small" onClick={onAction}>{messageAction}</Button>
+        }
         variant={variant}
         message={message}
       />
