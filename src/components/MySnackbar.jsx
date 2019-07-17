@@ -2,12 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Snackbar from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
 import MySnackbarContentWrapper from './MySnackbarContentWrapper';
 
 const MySnackbar = ({
   messages, isOpen, variant, handleClose, messageAction, onAction,
 }) => {
   const message = messages[Object.keys(messages)[0]] ? messages[Object.keys(messages)[0]] : '';
+
+  if (!messageAction) {
+    messageAction = true;
+  }
 
   return (
     <Snackbar
@@ -23,7 +29,12 @@ const MySnackbar = ({
         onClose={handleClose}
         action={messageAction ? (
           <Button color="inherit" size="small" onClick={onAction}>
-            {messageAction}
+            {typeof messageAction === 'boolean' ? (
+              <IconButton key="close" aria-label="Close" color="inherit" onClick={handleClose}>
+                <CloseIcon style={{ fontSize: 20 }} />
+              </IconButton>
+            ) : messageAction}
+
           </Button>
         ) : null}
         variant={variant}
