@@ -2,7 +2,9 @@ import { push } from 'connected-react-router';
 import {
   AUTH_REQUEST_IN_PROGRESS_START,
   AUTH_LOGGED_IN,
-  AUTH_LOGOUT, AUTH_REQUEST_IN_PROGRESS_END, RESET_SIGN_IN,
+  AUTH_LOGOUT,
+  AUTH_REQUEST_IN_PROGRESS_END,
+  RESET_SIGN_IN,
 } from '../constants/auth';
 import { userService } from '../services/userService';
 import { handleErrors } from './errors';
