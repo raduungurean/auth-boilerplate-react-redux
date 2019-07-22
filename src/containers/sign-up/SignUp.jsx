@@ -66,7 +66,7 @@ const SignUp = ({
     }
   }, [registered, resetErrorsForScreen]);
 
-  useEffect(() => () => resetErrorsForScreen('sign-up'), [resetErrorsForScreen]);
+  // useEffect(() => () => resetErrorsForScreen('sign-up'), [resetErrorsForScreen]);
 
   useEffect(() => {
     if (firstName

@@ -11,7 +11,7 @@ import { confirmSignUp } from '../../actions/confirm-sign-up';
 import FormLink from '../../components/FormLink';
 
 const ConfirmSignUp = ({
-  requestInProgress, confirmSignUpNow, match, confirmed, history
+  requestInProgress, confirmSignUpNow, match, confirmed, history,
 }) => {
   const classes = useStyles();
   const { token } = match.params;

@@ -43,8 +43,8 @@ const theme = createMuiTheme({
   },
 });
 
-// const API_URL = 'https://beta4.next-game.app/api';
-const API_URL = 'http://api.local/api';
+const API_URL = 'https://beta4.next-game.app/api';
+// const API_URL = 'http://api.local/api';
 
 const config = {
   API_URL,

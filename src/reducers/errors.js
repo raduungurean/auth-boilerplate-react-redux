@@ -1,5 +1,8 @@
 import {
-  RESET_ALL_ERRORS, RESET_ERRORS, RESET_ERRORS_EXCEPT, SET_ERRORS,
+  RESET_ALL_ERRORS,
+  RESET_ERRORS,
+  RESET_ERRORS_EXCEPT,
+  SET_ERRORS,
 } from '../constants/errors';
 
 const INITIAL_STATE = {
@@ -14,6 +17,13 @@ export default function (state = INITIAL_STATE, action) {
         errors: {
           [action.payload.screen]: action.payload.errors,
         },
+      };
+    }
+
+    case '@@router/LOCATION_CHANGE': {
+      // console.log(action.payload.location.pathname);
+      return {
+        ...INITIAL_STATE,
       };
     }
 
